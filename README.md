@@ -1,7 +1,9 @@
 Cell Todos
 ==========
 
-In 3 steps, you'll have todo_app up and running in your browser from scratch.
+Demo app using [Cell](https://github.com/peterwmwong/cell).
+
+In 3 steps, you'll have a Todo app up and running in your browser from scratch.
 
 Developing
 ==========
@@ -94,11 +96,4 @@ work with CoffeeScript.
 
 About and Credits
 =================
-This project was created to train developers how to use a specific flavor of
-creating rich client side applications centered around Backbone.js.  The
-technologies attached to the backbone are CoffeeScript, require.js for
-modularity, Stylus for styling and Peter Wong's Cell
-[https://github.com/peterwmwong/cell] for views.  The todo list application
-was ported from Larry Myers' Backbone Koans 
-[https://github.com/larrymyers/backbone-koans] which was pure JavaScript and
-Backbone.js.
+This project is based [https://github.com/gerryster/js_training] by Ryan Gerry.
