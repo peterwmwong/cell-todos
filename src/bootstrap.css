@@ -1,0 +1,29 @@
+.App{-moz-box-shadow:rgba(0,0,0,0.20) 0 5px 6px 0;-webkit-box-shadow:rgba(0,0,0,0.20) 0 5px 6px 0;-o-box-shadow:rgba(0,0,0,0.20) 0 5px 6px 0;box-shadow:rgba(0,0,0,0.20) 0 5px 6px 0;background:#fff;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;margin:0 auto 40px;padding:20px;width:480px;}
+.App > h1{font-size:36px;font-weight:bold;text-align:center;padding:20px 0 30px 0;line-height:1}
+.App > .content > #create-todo{position:relative;}
+.App > .content > #create-todo > input{width:466px;font-size:24px;font-family:inherit;line-height:1.4em;border:0;outline:none;padding:6px;border:1px solid #999;-moz-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;-webkit-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;-o-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset}
+.App > .content > #create-todo > input-webkit-input-placeholder{font-style:italic}
+.App > .content > #create-todo > span{position:absolute;z-index:999;width:170px;left:50%;margin-left:-85px}
+.App > #todos > #todo-list{margin-top:10px}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline}
+body{background:#eee;color:#333}
+li.Todo{padding:12px 20px 11px 0;position:relative;font-size:24px;line-height:1.1em;border-bottom:1px solid #ccc;list-style:none;}
+li.Todo:after{content:"\0020";display:block;height:0;clear:both;overflow:hidden;visibility:hidden}
+li.Todo > .todo > .edit{display:none}
+li.Todo > .todo > .display > .check{position:relative;top:9px;margin:0 10px 0 7px;float:left}
+li.Todo > .todo > .display > .todo-destroy{position:absolute;right:5px;top:14px;display:none;cursor:pointer;width:20px;height:20px;background:url("/images/destroy.png") no-repeat 0 0;}
+li.Todo > .todo > .display > .todo-destroy:hover{background-position:0 -20px}
+li.Todo:hover > .todo > .display > .todo-destroy{display:block}
+li.Todo.done .todo-text{text-decoration:line-through;color:#777}
+li.Todo.editing{padding:0;border-bottom:0;}
+li.Todo.editing > .todo > .display{display:none}
+li.Todo.editing > .todo > .edit{display:block;}
+li.Todo.editing > .todo > .edit > input{width:444px;font-size:24px;font-family:inherit;margin:0;line-height:1.6em;border:0;outline:none;padding:10px 7px 0 27px;border:1px solid #999;-moz-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;-webkit-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;-o-box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset;box-shadow:rgba(0,0,0,0.20) 0 1px 2px 0 inset}
+.Stats{*zoom:1;margin-top:10px;color:#777;}
+.Stats > .todo-count{float:left;}
+.Stats > .todo-count > .number{font-weight:bold;color:#333}
+.Stats .todo-clear{float:right;}
+.Stats .todo-clear > a{color:#777;font-size:12px}
+.Stats .todo-clear > a:visited{color:#777}
+.Stats .todo-clear > a:hover{color:#369}
+.Stats:after{content:"\0020";display:block;height:0;clear:both;overflow:hidden;visibility:hidden}
