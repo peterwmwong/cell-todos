@@ -2,28 +2,24 @@
 <html>
 <head>
   <title>Cell Todos</title>
+</head>
+<body style='margin:0;padding:0;' data-cell='views/App'>
   <script src="vendor/jquery.js"></script>
   <script>
     require = {
       baseUrl:'src',
-      deps: ['cell'],
       paths: {
         cell: '../vendor/cell',
         __: '../vendor/__'
-      },
-      callback: function(cell){}
+      }
     };
   </script>
-  <script src='node_modules/requirejs/require.js'></script>
+  <script data-main='cell' src='node_modules/requirejs/require.js'></script>
   <script src='node_modules/underscore/underscore.js'></script>
   <script src='node_modules/backbone/backbone.js'></script>
   <script src="vendor/backbone.localStorage.js"></script>
   <script>
-    if(window.location.search.indexOf('live') > -1){
-      $('head').append($("<script src='vendor/live.js'>"));
-    }
+    if(window.location.search.indexOf('live') > -1){ $('body').append($("<script src='vendor/live.js'>")); }
   </script>
-</head>
-<body style='margin:0;padding:0;' data-main='cell' data-cell='views/App'>
 </body>
 </html>
