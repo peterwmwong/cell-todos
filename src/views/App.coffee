@@ -26,9 +26,10 @@ define [
   after_render: ->
     # When these events happen on the TodoList collection, call the following
     # methods on this object:
-    @todos.bind 'add', @addOne, @
-    @todos.bind 'reset', => @todos.each @addOne, @
-    @todos.fetch()
+    @todos
+      .on('add', @addOne, @)
+      .on('reset', => @todos.each @addOne, @)
+      .fetch()
 
   events:
     "keypress #new-todo": (e)->

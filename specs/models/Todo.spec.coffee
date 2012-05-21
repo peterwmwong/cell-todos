@@ -44,7 +44,7 @@ define -> ({loadModule})->
 
       todo = new @Todo()
 
-      todo.bind('change', callback)
+      todo.on('change', callback)
 
       # How would you update a property on the todo here?
       # Hint: http://documentcloud.github.com/backbone/#Model-set
@@ -57,7 +57,7 @@ define -> ({loadModule})->
 
       todo = new @Todo()
 
-      todo.bind('error', errorCallback)
+      todo.on('error', errorCallback)
 
       # What would you need to set on the todo properties to cause validation to fail?
       # Refer to Todo.validate in Todo.coffee to see the logic.

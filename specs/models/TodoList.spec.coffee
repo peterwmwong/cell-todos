@@ -43,7 +43,7 @@ define -> ({loadModule})->
       todos = new @TodoList();
 
       addModelCallback = jasmine.createSpy('-add model callback-')
-      todos.bind('add', addModelCallback)
+      todos.on('add', addModelCallback)
 
       # How would you get both expectations to pass with a single method call?
       todo = new @TodoList::model({text: 'pass this test'})
@@ -53,7 +53,7 @@ define -> ({loadModule})->
       expect(addModelCallback).toHaveBeenCalled()
 
       removeModelCallback = jasmine.createSpy('-remove model callback-')
-      todos.bind('remove', removeModelCallback)
+      todos.on('remove', removeModelCallback)
 
       # How would you get both expectations to pass with a single method call?
       todos.remove(todo)

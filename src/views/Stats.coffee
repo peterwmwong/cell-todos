@@ -1,7 +1,7 @@
 define ['__'], (__)->
 
   initialize: ->
-    @model.bind 'all', => @render()
+    @model.on 'all', => @render()
 
   render_el: -> [
     if @model.length

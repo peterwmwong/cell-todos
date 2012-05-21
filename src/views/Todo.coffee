@@ -4,20 +4,20 @@ define ['__'], (__)->
 
   initialize: ->
     @$el.addClass('done') if @model.get('done') is true
-    @model.bind 'destroy', => @$el.remove()
-    @model.bind 'change', => @render()
+    @model
+      .on('destroy', => @$el.remove())
+      .on('change', => @render())
 
   render_el: -> [
-    __ "div.todo",
-      __ '.display',
-        __ 'input.check', do=>
-          attrs = type: 'checkbox'
-          attrs.checked = 'check' if @model.get('done') is true
-          attrs
-        __ '.todo-text', text = @model.get 'text'
-        __ 'span.todo-destroy'
-      __ '.edit',
-        @$input = __.$ 'input.todo-input', type: "text", value: text
+    __ '.display',
+      __ 'input.check', do=>
+        attrs = type: 'checkbox'
+        attrs.checked = 'check' if @model.get('done') is true
+        attrs
+      __ '.todo-text', text = @model.get 'text'
+      __ 'span.todo-destroy'
+    __ '.edit',
+      @$input = __.$ 'input.todo-input', type: "text", value: text
   ]
 
   events:
