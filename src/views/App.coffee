@@ -1,9 +1,10 @@
 define (require)->
 
-  Todos = require 'models/Todos'
-  Todo = require './Todo'
   x_class = require 'cell/exts/x_class'
   events = require 'cell/dom/events'
+  
+  Todos = require 'models/Todos'
+  Todo = require 'views/Todo'
 
   App = require('cell/defineView!')
 
@@ -16,7 +17,8 @@ define (require)->
     render: (_)-> [
       _ 'section#todoapp',
         _ 'header#header',
-          _ 'h1', 'todos'
+          _ 'h1',
+            'todos'
 
           _ 'input#new-todo',
             placeholder: 'What needs to be done?'
@@ -38,19 +40,27 @@ define (require)->
 
           _ 'ul#filters',
             _ 'li',
-              _ 'a', (x_class selected:-> null  is @get 'filter'), href: '#', 'All'
-              _ 'a', (x_class selected:-> false is @get 'filter'), href: '#/active', 'Active'
-              _ 'a', (x_class selected:-> true  is @get 'filter'), href: '#/completed', 'Completed'
+              _ 'a', (x_class selected:-> null  is @get 'filter'), href: '#',
+                'All'
+
+              _ 'a', (x_class selected:-> false is @get 'filter'), href: '#/active',
+                'Active'
+
+              _ 'a', (x_class selected:-> true  is @get 'filter'), href: '#/completed',
+                'Completed'
 
           ->if @completedCount()
-            _ 'button#clear-completed', onclick:@clearCompleted, "Clear completed (#{@completedCount()})"
+            _ 'button#clear-completed', onclick:@clearCompleted,
+              "Clear completed (#{@completedCount()})"
 
       _ 'footer#info',
         _ 'p',
           'Double-click to edit a todo.'
+
         _ 'p', 
           _ 'a', href:'http://twitter.com/peterwmwong',
             'Peter Wong'
+
         _ 'p',
           'Part of '
           _ 'a', href:'http://todomvc.com',
