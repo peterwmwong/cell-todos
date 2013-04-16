@@ -1,40 +1,32 @@
-define ['__'], (__)->
+define (require)->
+  x_model = require 'cell/exts/x_model'
+  x_class = require 'cell/exts/x_class'
 
-  tagName:  "li"
+  require('cell/defineView!')
 
-  initialize: ->
-    @$el.addClass('done') if @model.get('done') is true
-    @model
-      .on('destroy', => @$el.remove())
-      .on('change', => @render())
+    renderEl: (_)->
+      _ 'li', (x_class editing:->@get 'editing'),
 
-  render_el: -> [
-    __ '.display',
-      __ 'input.check', do=>
-        attrs = type: 'checkbox'
-        attrs.checked = 'check' if @model.get('done') is true
-        attrs
-      __ '.todo-text', text = @model.get 'text'
-      __ 'span.todo-destroy'
-    __ '.edit',
-      @$input = __.$ 'input.todo-input', type: "text", value: text
-  ]
+        _ '.view', ondblclick:@edit,
+          _ 'input.toggle', (x_model 'done'), type:'checkbox'
+          _ 'label',
+            -> @model.get 'text'
+          _ 'button.destroy', onclick:->@model.destroy()
 
-  events:
-    "click .check": ->
-      @model.toggle()
-      @$el.toggleClass 'done', @model.get 'done'
+        _ 'form', onsubmit:@submit,
+          @input =
+            _ 'input.edit', (x_model 'text'), type:'text', onblur:@blur
 
-    "dblclick div.todo-text": ->
-      @$el.addClass 'editing'
-      @$input.focus()
+    edit: ->
+      @set 'editing', true
+      setTimeout (=> @input.focus()), 0
+      return
 
-    "click span.todo-destroy": -> @model.destroy()
+    blur: (e)->
+      @set 'editing', false
+      return
 
-    "keypress .todo-input": (e)-> @close() if e.keyCode is 13
-
-    "blur .todo-input": 'close'
-
-  close: ->
-    @model.save text: @$input.val()
-    @$el.removeClass 'editing'
+    submit: (e)->
+      e.preventDefault()
+      @blur()
+      return

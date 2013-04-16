@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Cell Todos</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>cell - TodoMVC</title>
+<link rel="stylesheet" href="src/base.css">
+<!--[if IE]>
+<script src="../../assets/ie.js"></script>
+<![endif]-->
+<script src='vendor/cell/require.js'></script>
+<script src='modules_config.js'></script>
 </head>
-<body style='margin:0;padding:0;' data-cell='views/App'>
-  <script src="vendor/jquery.js"></script>
-  <script>
-    require = {
-      baseUrl:'src',
-      paths: {
-        cell: '../vendor/cell',
-        __: '../vendor/__'
-      }
-    };
-  </script>
-  <script data-main='cell' src='node_modules/requirejs/require.js'></script>
-  <script src='node_modules/underscore/underscore.js'></script>
-  <script src='node_modules/backbone/backbone.js'></script>
-  <script src="vendor/backbone.localStorage.js"></script>
-  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<body>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>

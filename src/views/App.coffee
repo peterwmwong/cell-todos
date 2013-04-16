@@ -1,45 +1,78 @@
-define [
-  'models/TodoList'
-  'cell!./Todo'
-  'cell!./Stats'
-  '__'
-], (TodoList, Todo, Stats, __)->
+define (require)->
 
-  initialize: ->
-    @todos = new TodoList()
+  Todos = require 'models/Todos'
+  Todo = require './Todo'
+  x_class = require 'cell/exts/x_class'
+  events = require 'cell/dom/events'
 
-  render_el: -> [
-    __ 'h1', 'Todos'
+  App = require('cell/defineView!')
 
-    __ '.content',
-      __ '#create-todo',
-        @$input = __.$ 'input#new-todo',
-          placeholder: 'What needs to be done?',
-          type: "text",
+    beforeRender: ->
+      events.on window, 'hashchange', @onHashChange, @
+      @onHashChange()
+      return
 
-    __ '#todos',
-      @$todo_list = __.$ 'ul#todo-list'
+    renderEl: -> document.body
+    render: (_)-> [
+      _ 'section#todoapp',
+        _ 'header#header',
+          _ 'h1', 'todos'
 
-    __ Stats, model: @todos
-  ]
+          _ 'input#new-todo',
+            placeholder: 'What needs to be done?'
+            type: 'text'
+            onkeypress: (e)->
+              if e.keyCode is 13
+                Todos.add text: e.target.value, done: false
+                e.target.value = ''
+              return
 
-  after_render: ->
-    # When these events happen on the TodoList collection, call the following
-    # methods on this object:
-    @todos
-      .on('add', @addOne, @)
-      .on('reset', => @todos.each @addOne, @)
-      .fetch()
+        _ 'section#main',
+          _ 'ul#todo-list',
+            _.map (->Todos.filterBy done: @get 'filter'), (todo)->
+              _ Todo, model: todo
 
-  events:
-    "keypress #new-todo": (e)->
-      if (text = @$input.val()) and e.keyCode is 13
-        @todos.create
-          text: text
-          done: false
-          order: @todos.nextOrder()
+        _ 'footer#footer',
+          _ 'span#todo-count',
+            -> "#{@incompleteCount()} item#{if @incompleteCount() > 1 then 's' else ''} left"
 
-        @$input.val ''
+          _ 'ul#filters',
+            _ 'li',
+              _ 'a', (x_class selected:-> null  is @get 'filter'), href: '#', 'All'
+              _ 'a', (x_class selected:-> false is @get 'filter'), href: '#/active', 'Active'
+              _ 'a', (x_class selected:-> true  is @get 'filter'), href: '#/completed', 'Completed'
 
-  addOne: (todo)->
-    @$todo_list.append __ Todo, model: todo
+          ->if @completedCount()
+            _ 'button#clear-completed', onclick:@clearCompleted, "Clear completed (#{@completedCount()})"
+
+      _ 'footer#info',
+        _ 'p',
+          'Double-click to edit a todo.'
+        _ 'p', 
+          _ 'a', href:'http://twitter.com/peterwmwong',
+            'Peter Wong'
+        _ 'p',
+          'Part of '
+          _ 'a', href:'http://todomvc.com',
+            'TodoMVC'
+    ]
+
+    onHashChange: ->
+      @set 'filter',
+        switch window.location.hash
+          when '#/active' then false
+          when '#/completed' then true
+          else  null
+      return
+
+    incompleteCount: ->
+      (Todos.filterBy done: false).length
+
+    clearCompleted: ->
+      todo.destroy() for todo in (Todos.filterBy done: true)
+      return
+
+    completedCount: ->
+      Todos.length() - @incompleteCount()
+
+  new App()

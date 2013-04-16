@@ -1,3 +1,15 @@
-#!/bin/bash
-npm install
-node_modules/.bin/coffee dev-server.coffee ./
+#!/usr/bin/env coffee
+
+{resolve} = require 'path'
+connect = require 'connect'
+http = require 'http'
+
+root_path = resolve __filename, '../..'
+app = connect()
+app.use(plugin) for plugin in [
+  connect.favicon()
+  connect.compress()
+  connect.static root_path, maxAge: 1, hidden: true
+] 
+http.createServer(app).listen port = 5000
+console.log "serving #{root_path} on port #{port}"

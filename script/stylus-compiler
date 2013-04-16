@@ -1,3 +1,0 @@
-#!/bin/bash
-npm install
-find src/views spec-runner/ -name '*.styl' -type f | xargs node_modules/.bin/stylus --include ./src/styles --watch --compress

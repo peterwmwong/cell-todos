@@ -9,7 +9,7 @@ closure = vendor/closure-compiler/compiler.jar
 #-------------------------------------------------------------------
 # BUILD
 #-------------------------------------------------------------------
-requirejsBuild = node_modules/.bin/r.js
+requirejsBuild = vendor/cell/r.js
 
 
 #===================================================================
@@ -20,35 +20,12 @@ requirejsBuild = node_modules/.bin/r.js
 #-------------------------------------------------------------------
 # BUILD
 #-------------------------------------------------------------------
-src/bootstrap.js: deps vendor/cell.js vendor/cell-builder-plugin.js
+src/bootstrap.js: deps
 	$(coffee) -c -b src/
-	$(stylus) --include ./src/styles --compress src/views/*.styl
-	$(requirejsBuild) \
-		-o \
-		paths.jquery=../vendor/jquery \
-		paths.backbone=../node_modules/backbone/backbone \
-		paths.underscore=../node_modules/underscore/underscore \
-		paths.requireLib=../node_modules/requirejs/require \
-		paths.backbone_localStorage=../vendor/backbone.localStorage \
-		paths.cell=../vendor/cell \
-		paths.__=../vendor/__ \
-		paths.cell-builder-plugin=../vendor/cell-builder-plugin \
-		include=underscore,backbone,backbone_localStorage,requireLib \
-		name=cell!views/App \
-		out=src/bootstrap.js \
-		baseUrl=src
-
-#------------------------------------------------------------------
-# DEV
-#-------------------------------------------------------------------
-server: deps
-	$(coffee) dev-server.coffee ./
-
-stylus: deps
-	find src/views ./spec-runner -name '*.styl' -type f | xargs $(stylus) --include ./src/styles --watch --compress
-
-coffee: deps
-	find src/ specs spec-runner -name '*.coffee' -type f | xargs $(coffee) -c -b --watch
+	node $(requirejsBuild) -o build_config.js
+	java -jar $(closure) --compilation_level SIMPLE_OPTIMIZATIONS --js src/bootstrap-tmp.js --js_output_file src/bootstrap.js
+	node_modules/.bin/cleancss -o src/bootstrap.css src/base.css
+	rm src/bootstrap-tmp.*
 
 #-------------------------------------------------------------------
 # Dependencies
@@ -60,12 +37,13 @@ update-closure: remove-closure $(closure)
 
 $(closure):
 	mkdir -p vendor/closure-compiler
-	wget -O vendor/closure-compiler/closure-compiler.zip http://closure-compiler.googlecode.com/files/compiler-latest.zip
+	curl -o vendor/closure-compiler/closure-compiler.zip "http://closure-compiler.googlecode.com/files/compiler-latest.zip"
 	unzip -d vendor/closure-compiler vendor/closure-compiler/closure-compiler.zip
 	rm vendor/closure-compiler/closure-compiler.zip
 
 deps:
 	npm install
+
 
 #-------------------------------------------------------------------
 # TEST
@@ -75,9 +53,3 @@ specs: deps
 
 clean:
 	@@rm src/bootstrap.*
-
-#-------------------------------------------------------------------
-# Training
-#-------------------------------------------------------------------
-exercises:
-	grep --files-with-matches -r  "exercise{{{" specs src | xargs $(coffee) script/make_training.coffee
