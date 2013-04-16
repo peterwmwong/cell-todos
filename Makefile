@@ -3,7 +3,6 @@
 #===================================================================
 npmbin = node_modules/.bin
 coffee = $(npmbin)/coffee
-stylus = $(npmbin)/stylus
 closure = vendor/closure-compiler/compiler.jar
 
 #-------------------------------------------------------------------
@@ -44,12 +43,6 @@ $(closure):
 deps:
 	npm install
 
-
-#-------------------------------------------------------------------
-# TEST
-#-------------------------------------------------------------------
-specs: deps
-	find specs -name '*.spec.coffee' | xargs $(coffee) -e 'console.log """define([],#{JSON.stringify process.argv[4..].map (e)->"spec!"+/^specs\/(.*?)\.spec\.coffee/.exec(e)[1]});"""' > spec-runner/GENERATED_all-specs.js
 
 clean:
 	@@rm src/bootstrap.*
