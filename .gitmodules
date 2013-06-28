@@ -1,0 +1,3 @@
+[submodule "vendor/cell"]
+	path = vendor/cell
+	url = git@github.com:peterwmwong/cell.git

@@ -9,6 +9,9 @@ define (require)->
   App = require('cell/defineView!')
 
     beforeRender: ->
+      @todos = Todos.query()
+      @todos.on "all", (type)->
+        console.log type
       events.on window, 'hashchange', @onHashChange, @
       @onHashChange()
       return
@@ -25,13 +28,14 @@ define (require)->
             type: 'text'
             onkeypress: (e)->
               if e.keyCode is 13
-                Todos.add text: e.target.value, done: false
+                newTodo = Todos.create text: e.target.value, done: false
+                newTodo.$save undefined, => @todos.requery()
                 e.target.value = ''
               return
 
         _ 'section#main',
           _ 'ul#todo-list',
-            _.map (->Todos.filterBy done: @get 'filter'), (todo)->
+            _.map (->@todos.filterBy done: @get 'filter'), (todo)->
               _ Todo, model: todo
 
         _ 'footer#footer',
@@ -76,13 +80,13 @@ define (require)->
       return
 
     incompleteCount: ->
-      (Todos.filterBy done: false).length
+      (@todos.filterBy done: false).length
 
     clearCompleted: ->
-      todo.destroy() for todo in (Todos.filterBy done: true)
+      @todo.$delete() for todo in (@todos.filterBy done: true)
       return
 
     completedCount: ->
-      Todos.length() - @incompleteCount()
+      @todos.length() - @incompleteCount()
 
   new App()

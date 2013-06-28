@@ -11,7 +11,8 @@ define (require)->
           _ 'input.toggle', (x_model 'done'), type:'checkbox'
           _ 'label',
             -> @model.get 'text'
-          _ 'button.destroy', onclick:->@model.destroy()
+          _ 'button.destroy', onclick:->
+            @model.$delete id:@model.get('_id').$oid
 
         _ 'form', onsubmit:@submit,
           @input =

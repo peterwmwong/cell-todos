@@ -1,7 +1,7 @@
 require.config({
   baseUrl:'src',
   paths: {
-    cell: '../vendor/cell/',
+    cell: '../vendor/cell/src',
   },
   deps: [
     'views/App'
